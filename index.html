@@ -47,7 +47,22 @@ header {
   font-weight: 900;
   letter-spacing: 10px;
   color: white;
-  text-shadow: 0 0 25px #008cff;
+  animation: vyroGlow 2.5s ease-in-out infinite;
+}
+
+@keyframes vyroGlow {
+  0%, 100% {
+    text-shadow:
+      0 0 5px rgba(0, 100, 255, 0.2),
+      0 0 15px rgba(0, 100, 255, 0.1);
+  }
+
+  50% {
+    text-shadow:
+      0 0 10px rgba(0, 150, 255, 0.9),
+      0 0 25px rgba(0, 100, 255, 0.7),
+      0 0 50px rgba(0, 80, 255, 0.4);
+  }
 }
 
 .tagline {
