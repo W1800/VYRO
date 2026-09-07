@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>VYRO — TikTok Downloader</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: Arial, sans-serif;
+      background:
+        radial-gradient(circle at 50% 35%, rgba(0, 110, 255, 0.16), transparent 35%),
+        #020408;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow-x: hidden;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 760px;
+      padding: 30px 20px;
+      text-align: center;
+    }
+
+    .logo {
+      font-size: clamp(55px, 14vw, 105px);
+      font-weight: 900;
+      letter-spacing: 10px;
+      color: #fff;
+      text-shadow:
+        0 0 8px #008cff,
+        0 0 20px #008cff,
+        0 0 45px rgba(0, 110, 255, 0.9);
+      margin-bottom: 10px;
+    }
+
+    .subtitle {
+      color: #9bbfff;
+      font-size: 15px;
+      letter-spacing: 3px;
+      margin-bottom: 45px;
+    }
+
+    .card {
+      padding: 28px;
+      border: 1px solid rgba(0, 140, 255, 0.35);
+      border-radius: 22px;
+      background: rgba(5, 12, 22, 0.8);
+      box-shadow:
+        0 0 35px rgba(0, 110, 255, 0.12),
+        inset 0 0 25px rgba(0, 90, 255, 0.04);
+      backdrop-filter: blur(12px);
+    }
+
+    h1 {
+      font-size: 28px;
+      margin-bottom: 10px;
+    }
+
+    .description {
+      color: #8894a8;
+      margin-bottom: 25px;
+      line-height: 1.7;
+    }
+
+    .input-box {
+      display: flex;
+      gap: 10px;
+      width: 100%;
+    }
+
+    input {
+      flex: 1;
+      min-width: 0;
+      height: 58px;
+      border-radius: 14px;
+      border: 1px solid #24354d;
+      outline: none;
+      background: #070d16;
+      color: white;
+      padding: 0 18px;
+      font-size: 15px;
+      direction: ltr;
+      text-align: left;
+    }
+
+    input:focus {
+      border-color: #008cff;
+      box-shadow: 0 0 15px rgba(0, 140, 255, 0.25);
+    }
+
+    button {
+      height: 58px;
+      padding: 0 25px;
+      border: none;
+      border-radius: 14px;
+      background: #087cff;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow:
+        0 0 15px rgba(0, 130, 255, 0.45),
+        0 0 35px rgba(0, 100, 255, 0.15);
+      transition: 0.2s;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow:
+        0 0 20px rgba(0, 150, 255, 0.65),
+        0 0 40px rgba(0, 100, 255, 0.25);
+    }
+
+    button:disabled {
+      opacity: 0.6;
+      cursor: wait;
+      transform: none;
+    }
+
+    #status {
+      min-height: 25px;
+      margin-top: 20px;
+      color: #8ebcff;
+    }
+
+    #result {
+      display: none;
+      margin-top: 25px;
+      padding: 18px;
+      border-radius: 16px;
+      background: #07101c;
+      border: 1px solid rgba(0, 140, 255, 0.25);
+    }
+
+    .download-link {
+      display: inline-block;
+      margin-top: 15px;
+      padding: 13px 25px;
+      border-radius: 12px;
+      background: #087cff;
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .footer {
+      margin-top: 25px;
+      color: #4e5c70;
+      font-size: 12px;
+    }
+
+    @media (max-width: 600px) {
+      .card {
+        padding: 20px;
+      }
+
+      .input-box {
+        flex-direction: column;
+      }
+
+      button {
+        width: 100%;
+      }
+
+      .subtitle {
+        font-size: 12px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+
+    <div class="logo">VYRO</div>
+
+    <div class="subtitle">
+      VIDEO WITHOUT THE CLUTTER
+    </div>
+
+    <div class="card">
+
+      <h1>تحميل فيديو TikTok</h1>
+
+      <p class="description">
+        الصق رابط فيديو TikTok في الأسفل لتحميله.
+      </p>
+
+      <div class="input-box">
+
+        <input
+          id="tiktokUrl"
+          type="url"
+          placeholder="https://www.tiktok.com/..."
+          autocomplete="off"
+        >
+
+        <button id="downloadBtn" onclick="downloadVideo()">
+          تحميل
+        </button>
+
+      </div>
+
+      <div id="status"></div>
+
+      <div id="result">
+        <div>تم تجهيز الفيديو</div>
+        <a
+          id="downloadLink"
+          class="download-link"
+          href="#"
+          target="_blank"
+          rel="noopener"
+        >
+          تنزيل الفيديو
+        </a>
+      </div>
+
+    </div>
+
+    <div class="footer">
+      © 2026 الوليد 
+    </div>
+
+  </div>
+
+  <script>
+    async function downloadVideo() {
+
+      const input = document.getElementById("tiktokUrl");
+      const button = document.getElementById("downloadBtn");
+      const status = document.getElementById("status");
+      const result = document.getElementById("result");
+      const downloadLink = document.getElementById("downloadLink");
+
+      const url = input.value.trim();
+
+      result.style.display = "none";
+
+      if (!url) {
+        status.textContent = "الصق رابط TikTok أولاً.";
+        return;
+      }
+
+      if (!url.includes("tiktok.com")) {
+        status.textContent = "الرابط لا يبدو كرابط TikTok.";
+        return;
+      }
+
+      button.disabled = true;
+      status.textContent = "جاري معالجة الفيديو...";
+
+      try {
+
+        /*
+          لاحقًا سنربط هذا العنوان بالخادم الحقيقي:
+          /api/download?url=...
+        */
+
+        const response = await fetch(
+          "/api/download?url=" + encodeURIComponent(url)
+        );
+
+        if (!response.ok) {
+          throw new Error("Download failed");
+        }
+
+        const data = await response.json();
+
+        if (!data.downloadUrl) {
+          throw new Error("No download URL");
+        }
+
+        downloadLink.href = data.downloadUrl;
+
+        result.style.display = "block";
+        status.textContent = "تم تجهيز الفيديو.";
+
+      } catch (error) {
+
+        console.error(error);
+
+        status.textContent =
+          "الموقع جاهز، لكن خدمة التنزيل تحتاج إلى ربط الخادم.";
+
+      } finally {
+
+        button.disabled = false;
+
+      }
+    }
+  </script>
+
+</body>
+</html>
