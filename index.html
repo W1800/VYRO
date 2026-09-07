@@ -314,27 +314,53 @@ footer {
 </div>
 
 <script>
-function checkVideo() {
+async function checkVideo() {
   const input = document.getElementById("videoUrl");
   const message = document.getElementById("message");
   const url = input.value.trim();
 
   if (!url) {
-    message.textContent = "الصق رابط الفيديو أولًا.";
+    message.textContent = "الصق رابط الفيديو أولاً.";
     message.classList.add("show");
     return;
   }
 
   if (!url.includes("tiktok.com")) {
-    message.textContent = "هذا ليس رابط TikTok صحيحًا.";
+    message.textContent = "هذا ليس رابط TikTok صحيحاً.";
     message.classList.add("show");
     return;
   }
 
-  message.textContent =
-    "تم التحقق من الرابط. زر التحميل يحتاج الآن إلى ربط الموقع بخدمة خلفية لتنزيل الفيديو فعليًا.";
-
+  message.textContent = "جاري جلب الفيديو...";
   message.classList.add("show");
+
+  try {
+    const response = await fetch(
+      "https://vyro-backend.onrender.com/api/download",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ url })
+      }
+    );
+
+    const data = await response.json();
+
+    if (!response.ok || !data.success) {
+      throw new Error(data.error || "تعذر الحصول على الفيديو");
+    }
+
+    message.innerHTML = `
+      <a href="${data.video}" target="_blank">
+        مشاهدة الفيديو
+      </a>
+    `;
+  } catch (error) {
+    message.textContent = "حدث خطأ أثناء جلب الفيديو.";
+    console.error(error);
+  }
 }
 </script>
 
