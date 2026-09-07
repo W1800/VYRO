@@ -287,39 +287,49 @@ footer {
     letter-spacing: 6px;
   }
 }
- /* إطار كهربائي متحرك */
+ /* كهرباء متحركة حول إطار التحميل */
 .card:first-of-type {
   position: relative;
   z-index: 1;
-  border: 3px solid transparent;
+  isolation: isolate;
+  border: 2px solid #00aaff;
   border-radius: 18px;
-  background:
-    linear-gradient(rgba(0, 8, 25, 0.94), rgba(0, 8, 25, 0.94)) padding-box,
-    linear-gradient(90deg, #006eff, #00eaff, white, #00eaff, #006eff) border-box;
-  background-size: 100% 100%, 300% 100%;
-  animation: electricBorder 2s linear infinite;
-  box-shadow:
-    0 0 12px rgba(0, 140, 255, 0.8),
-    0 0 25px rgba(0, 100, 255, 0.35);
+  background: rgba(0, 8, 25, 0.94);
 }
 
-@keyframes electricBorder {
-  0% {
-    background-position: 0 0, 0% 50%;
-  }
+.card:first-of-type::before {
+  content: "";
+  position: absolute;
+  inset: -4px;
+  border-radius: 21px;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg,
+    #006eff 60deg,
+    #00eaff 120deg,
+    white 150deg,
+    transparent 210deg,
+    #006eff 300deg,
+    transparent 360deg
+  );
+  animation: electricMove 2s linear infinite;
+  z-index: -2;
+}
 
-  100% {
-    background-position: 0 0, 300% 50%;
+.card:first-of-type::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 18px;
+  background: rgba(0, 8, 25, 0.94);
+  z-index: -1;
+}
+
+@keyframes electricMove {
+  to {
+    transform: rotate(360deg);
   }
 }
-}
-
-/* تقليل الحركة إذا كان الجهاز يفضل ذلك */
-@media (prefers-reduced-motion: reduce) {
-  .card:first-of-type,
-  .card:first-of-type::before {
-    animation: none;
-  }
 }
 </style>
 </head>
