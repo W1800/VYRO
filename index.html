@@ -1,308 +1,342 @@
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VYRO — Video Without The Clutter</title>
 
-  <title>VYRO — TikTok Downloader</title>
+<style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+body {
+  font-family: Arial, sans-serif;
+  background: #020408;
+  color: white;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
 
-    body {
-      min-height: 100vh;
-      font-family: Arial, sans-serif;
-      background:
-        radial-gradient(circle at 50% 35%, rgba(0, 110, 255, 0.16), transparent 35%),
-        #020408;
-      color: white;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      overflow-x: hidden;
-    }
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at 50% 20%, rgba(0,110,255,.18), transparent 40%);
+  pointer-events: none;
+}
 
-    .container {
-      width: 100%;
-      max-width: 760px;
-      padding: 30px 20px;
-      text-align: center;
-    }
+.container {
+  width: 100%;
+  max-width: 850px;
+  margin: auto;
+  padding: 30px 20px;
+  position: relative;
+}
 
-    .logo {
-      font-size: clamp(55px, 14vw, 105px);
-      font-weight: 900;
-      letter-spacing: 10px;
-      color: #fff;
-      text-shadow:
-        0 0 8px #008cff,
-        0 0 20px #008cff,
-        0 0 45px rgba(0, 110, 255, 0.9);
-      margin-bottom: 10px;
-    }
+header {
+  text-align: center;
+  padding: 35px 0 25px;
+}
 
-    .subtitle {
-      color: #9bbfff;
-      font-size: 15px;
-      letter-spacing: 3px;
-      margin-bottom: 45px;
-    }
+.logo {
+  font-size: clamp(45px, 12vw, 85px);
+  font-weight: 900;
+  letter-spacing: 10px;
+  color: white;
+  text-shadow: 0 0 25px #008cff;
+}
 
-    .card {
-      padding: 28px;
-      border: 1px solid rgba(0, 140, 255, 0.35);
-      border-radius: 22px;
-      background: rgba(5, 12, 22, 0.8);
-      box-shadow:
-        0 0 35px rgba(0, 110, 255, 0.12),
-        inset 0 0 25px rgba(0, 90, 255, 0.04);
-      backdrop-filter: blur(12px);
-    }
+.tagline {
+  color: #9bb8e8;
+  letter-spacing: 4px;
+  font-size: 12px;
+  margin-top: 10px;
+}
 
-    h1 {
-      font-size: 28px;
-      margin-bottom: 10px;
-    }
+.card {
+  background: rgba(5, 15, 30, .85);
+  border: 1px solid #123b68;
+  border-radius: 22px;
+  padding: 28px;
+  margin-top: 25px;
+  box-shadow: 0 0 30px rgba(0,110,255,.08);
+}
 
-    .description {
-      color: #8894a8;
-      margin-bottom: 25px;
-      line-height: 1.7;
-    }
+h1 {
+  font-size: clamp(22px, 5vw, 32px);
+  margin-bottom: 10px;
+}
 
-    .input-box {
-      display: flex;
-      gap: 10px;
-      width: 100%;
-    }
+h2 {
+  font-size: 22px;
+  margin-bottom: 12px;
+}
 
-    input {
-      flex: 1;
-      min-width: 0;
-      height: 58px;
-      border-radius: 14px;
-      border: 1px solid #24354d;
-      outline: none;
-      background: #070d16;
-      color: white;
-      padding: 0 18px;
-      font-size: 15px;
-      direction: ltr;
-      text-align: left;
-    }
+.subtitle {
+  color: #9aa8bd;
+  margin-bottom: 25px;
+  line-height: 1.8;
+}
 
-    input:focus {
-      border-color: #008cff;
-      box-shadow: 0 0 15px rgba(0, 140, 255, 0.25);
-    }
+.input-row {
+  display: flex;
+  gap: 10px;
+}
 
-    button {
-      height: 58px;
-      padding: 0 25px;
-      border: none;
-      border-radius: 14px;
-      background: #087cff;
-      color: white;
-      font-size: 16px;
-      font-weight: bold;
-      cursor: pointer;
-      box-shadow:
-        0 0 15px rgba(0, 130, 255, 0.45),
-        0 0 35px rgba(0, 100, 255, 0.15);
-      transition: 0.2s;
-    }
+input {
+  flex: 1;
+  min-width: 0;
+  background: #07101e;
+  border: 1px solid #29435f;
+  border-radius: 14px;
+  padding: 17px;
+  color: white;
+  font-size: 15px;
+  outline: none;
+  direction: ltr;
+}
 
-    button:hover {
-      transform: translateY(-2px);
-      box-shadow:
-        0 0 20px rgba(0, 150, 255, 0.65),
-        0 0 40px rgba(0, 100, 255, 0.25);
-    }
+input:focus {
+  border-color: #168cff;
+  box-shadow: 0 0 12px rgba(0,140,255,.25);
+}
 
-    button:disabled {
-      opacity: 0.6;
-      cursor: wait;
-      transform: none;
-    }
+button {
+  border: none;
+  border-radius: 14px;
+  padding: 0 25px;
+  background: linear-gradient(135deg, #008cff, #0055ff);
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  min-height: 54px;
+  transition: .2s;
+}
 
-    #status {
-      min-height: 25px;
-      margin-top: 20px;
-      color: #8ebcff;
-    }
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 20px rgba(0,140,255,.35);
+}
 
-    #result {
-      display: none;
-      margin-top: 25px;
-      padding: 18px;
-      border-radius: 16px;
-      background: #07101c;
-      border: 1px solid rgba(0, 140, 255, 0.25);
-    }
+button:active {
+  transform: scale(.97);
+}
 
-    .download-link {
-      display: inline-block;
-      margin-top: 15px;
-      padding: 13px 25px;
-      border-radius: 12px;
-      background: #087cff;
-      color: white;
-      text-decoration: none;
-      font-weight: bold;
-    }
+.message {
+  display: none;
+  margin-top: 18px;
+  padding: 15px;
+  border-radius: 12px;
+  background: #071b32;
+  border: 1px solid #164d80;
+  color: #b9d9ff;
+  line-height: 1.8;
+}
 
-    .footer {
-      margin-top: 25px;
-      color: #4e5c70;
-      font-size: 12px;
-    }
+.message.show {
+  display: block;
+}
 
-    @media (max-width: 600px) {
-      .card {
-        padding: 20px;
-      }
+.features {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin-top: 25px;
+}
 
-      .input-box {
-        flex-direction: column;
-      }
+.feature {
+  background: #07101e;
+  border: 1px solid #142b45;
+  border-radius: 16px;
+  padding: 20px 12px;
+  text-align: center;
+}
 
-      button {
-        width: 100%;
-      }
+.feature-icon {
+  font-size: 25px;
+  margin-bottom: 10px;
+}
 
-      .subtitle {
-        font-size: 12px;
-      }
-    }
-  </style>
+.feature strong {
+  display: block;
+  margin-bottom: 7px;
+}
+
+.feature span {
+  color: #8495ad;
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.links {
+  display: grid;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 16px;
+  border: 1px solid #183552;
+  border-radius: 14px;
+  background: #07101e;
+  color: white;
+  text-decoration: none;
+  transition: .2s;
+}
+
+.link:hover {
+  border-color: #168cff;
+  background: #0a1a2d;
+}
+
+.link small {
+  color: #7f94ad;
+}
+
+footer {
+  text-align: center;
+  color: #52657c;
+  font-size: 12px;
+  padding: 35px 0 10px;
+}
+
+@media (max-width: 600px) {
+  .container {
+    padding: 20px 14px;
+  }
+
+  .card {
+    padding: 20px;
+  }
+
+  .input-row {
+    flex-direction: column;
+  }
+
+  button {
+    width: 100%;
+  }
+
+  .features {
+    grid-template-columns: 1fr;
+  }
+
+  .logo {
+    letter-spacing: 6px;
+  }
+}
+</style>
 </head>
 
 <body>
 
-  <div class="container">
+<div class="container">
 
+  <header>
     <div class="logo">VYRO</div>
+    <div class="tagline">VIDEO WITHOUT THE CLUTTER</div>
+  </header>
 
-    <div class="subtitle">
-      VIDEO WITHOUT THE CLUTTER
+  <section class="card">
+    <h1>تحميل فيديو TikTok</h1>
+    <p class="subtitle">
+      الصق رابط فيديو TikTok في الأسفل للبدء.
+    </p>
+
+    <div class="input-row">
+      <input
+        id="videoUrl"
+        type="url"
+        placeholder="https://www.tiktok.com/..."
+        autocomplete="off"
+      >
+      <button onclick="checkVideo()">تحميل</button>
     </div>
 
-    <div class="card">
+    <div id="message" class="message"></div>
+  </section>
 
-      <h1>تحميل فيديو TikTok</h1>
-
-      <p class="description">
-        الصق رابط فيديو TikTok في الأسفل لتحميله.
-      </p>
-
-      <div class="input-box">
-
-        <input
-          id="tiktokUrl"
-          type="url"
-          placeholder="https://www.tiktok.com/..."
-          autocomplete="off"
-        >
-
-        <button id="downloadBtn" onclick="downloadVideo()">
-          تحميل
-        </button>
-
-      </div>
-
-      <div id="status"></div>
-
-      <div id="result">
-        <div>تم تجهيز الفيديو</div>
-        <a
-          id="downloadLink"
-          class="download-link"
-          href="#"
-          target="_blank"
-          rel="noopener"
-        >
-          تنزيل الفيديو
-        </a>
-      </div>
-
+  <div class="features">
+    <div class="feature">
+      <div class="feature-icon">⚡</div>
+      <strong>سريع</strong>
+      <span>واجهة خفيفة وسهلة الاستخدام.</span>
     </div>
 
-    <div class="footer">
-      © 2026 الوليد 
+    <div class="feature">
+      <div class="feature-icon">🔒</div>
+      <strong>بسيط</strong>
+      <span>بدون تسجيل أو خطوات معقدة.</span>
     </div>
 
+    <div class="feature">
+      <div class="feature-icon">📱</div>
+      <strong>متوافق</strong>
+      <span>مصمم للجوال والكمبيوتر.</span>
+    </div>
   </div>
 
-  <script>
-    async function downloadVideo() {
+  <section class="card">
+    <h2>روابطي</h2>
+    <p class="subtitle">تابعني على منصاتي.</p>
 
-      const input = document.getElementById("tiktokUrl");
-      const button = document.getElementById("downloadBtn");
-      const status = document.getElementById("status");
-      const result = document.getElementById("result");
-      const downloadLink = document.getElementById("downloadLink");
+    <div class="links">
+      <a class="link" href="https://www.tiktok.com/" target="_blank">
+        <span>🎵 TikTok</span>
+        <small>زيارة الحساب ↗</small>
+      </a>
 
-      const url = input.value.trim();
+      <a class="link" href="https://www.youtube.com/" target="_blank">
+        <span>▶️ YouTube</span>
+        <small>زيارة القناة ↗</small>
+      </a>
 
-      result.style.display = "none";
+      <a class="link" href="https://github.com/W1800" target="_blank">
+        <span>💻 GitHub</span>
+        <small>مشاريعي ↗</small>
+      </a>
+    </div>
+  </section>
 
-      if (!url) {
-        status.textContent = "الصق رابط TikTok أولاً.";
-        return;
-      }
+  <footer>
+    © 2026 وليد — VYRO
+  </footer>
 
-      if (!url.includes("tiktok.com")) {
-        status.textContent = "الرابط لا يبدو كرابط TikTok.";
-        return;
-      }
+</div>
 
-      button.disabled = true;
-      status.textContent = "جاري معالجة الفيديو...";
+<script>
+function checkVideo() {
+  const input = document.getElementById("videoUrl");
+  const message = document.getElementById("message");
+  const url = input.value.trim();
 
-      try {
+  if (!url) {
+    message.textContent = "الصق رابط الفيديو أولًا.";
+    message.classList.add("show");
+    return;
+  }
 
-        /*
-          لاحقًا سنربط هذا العنوان بالخادم الحقيقي:
-          /api/download?url=...
-        */
+  if (!url.includes("tiktok.com")) {
+    message.textContent = "هذا ليس رابط TikTok صحيحًا.";
+    message.classList.add("show");
+    return;
+  }
 
-        const response = await fetch(
-          "/api/download?url=" + encodeURIComponent(url)
-        );
+  message.textContent =
+    "تم التحقق من الرابط. زر التحميل يحتاج الآن إلى ربط الموقع بخدمة خلفية لتنزيل الفيديو فعليًا.";
 
-        if (!response.ok) {
-          throw new Error("Download failed");
-        }
-
-        const data = await response.json();
-
-        if (!data.downloadUrl) {
-          throw new Error("No download URL");
-        }
-
-        downloadLink.href = data.downloadUrl;
-
-        result.style.display = "block";
-        status.textContent = "تم تجهيز الفيديو.";
-
-      } catch (error) {
-
-        console.error(error);
-
-        status.textContent =
-          "الموقع جاهز، لكن خدمة التنزيل تحتاج إلى ربط الخادم.";
-
-      } finally {
-
-        button.disabled = false;
-
-      }
-    }
-  </script>
+  message.classList.add("show");
+}
+</script>
 
 </body>
 </html>
