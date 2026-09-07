@@ -287,47 +287,26 @@ footer {
     letter-spacing: 6px;
   }
 }
- /* كهرباء متحركة حول إطار التحميل */
+ /* وميض كهربائي حول إطار التحميل */
 .card:first-of-type {
   position: relative;
-  z-index: 1;
-  isolation: isolate;
   border: 2px solid #00aaff;
   border-radius: 18px;
-  background: rgba(0, 8, 25, 0.94);
+  animation: electricFlash 1.2s infinite;
 }
 
-.card:first-of-type::before {
-  content: "";
-  position: absolute;
-  inset: -4px;
-  border-radius: 21px;
-  background: conic-gradient(
-    from 0deg,
-    transparent 0deg,
-    #006eff 60deg,
-    #00eaff 120deg,
-    white 150deg,
-    transparent 210deg,
-    #006eff 300deg,
-    transparent 360deg
-  );
-  animation: electricMove 2s linear infinite;
-  z-index: -2;
-}
+@keyframes electricFlash {
+  0%, 100% {
+    border-color: #006eff;
+    box-shadow: 0 0 5px #006eff;
+  }
 
-.card:first-of-type::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: 18px;
-  background: rgba(0, 8, 25, 0.94);
-  z-index: -1;
-}
-
-@keyframes electricMove {
-  to {
-    transform: rotate(360deg);
+  50% {
+    border-color: #ffffff;
+    box-shadow:
+      0 0 10px #00aaff,
+      0 0 25px #006eff,
+      0 0 45px #00aaff;
   }
 }
 }
