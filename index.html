@@ -388,10 +388,10 @@ async function checkVideo() {
     }
 
     message.innerHTML = `
-      <a href="${data.video}" target="_blank">
-        مشاهدة الفيديو
-      </a>
-    `;
+  <a href="${data.video}" download="VYRO-video.mp4">
+    تحميل الفيديو
+  </a>
+`;
   } catch (error) {
     message.textContent = "حدث خطأ أثناء جلب الفيديو.";
     console.error(error);
