@@ -110,12 +110,13 @@ header {
 }
 
 .card {
-  background: rgba(5, 15, 30, .85);
-  border: 1px solid #123b68;
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  padding: 14px;
+  border: 1px solid rgba(0, 140, 255, 0.35);
   border-radius: 22px;
-  padding: 28px;
-  margin-top: 25px;
-  box-shadow: 0 0 30px rgba(0,110,255,.08);
+  background: rgba(0, 8, 25, 0.78);
 }
 
 h1 {
@@ -284,6 +285,88 @@ footer {
 
   .logo {
     letter-spacing: 6px;
+  }
+}
+  /* إطار كهربائي متحرك حول بطاقة التحميل */
+.card:first-of-type {
+  border: 2px solid transparent;
+  background:
+    linear-gradient(rgba(0, 8, 25, 0.92), rgba(0, 8, 25, 0.92)) padding-box,
+    linear-gradient(
+      90deg,
+      #006eff,
+      #00eaff,
+      #ffffff,
+      #006eff,
+      #00eaff
+    ) border-box;
+  background-size: 100% 100%, 300% 100%;
+  animation: electricBorder 4s linear infinite;
+  box-shadow:
+    0 0 12px rgba(0, 140, 255, 0.35),
+    inset 0 0 20px rgba(0, 100, 255, 0.08);
+}
+
+@keyframes electricBorder {
+  0% {
+    background-position: 0 0, 0% 50%;
+  }
+
+  50% {
+    background-position: 0 0, 100% 50%;
+  }
+
+  100% {
+    background-position: 0 0, 0% 50%;
+  }
+}
+
+/* ومضات كهربائية صغيرة */
+.card:first-of-type::before,
+.card:first-of-type::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  z-index: -1;
+  border-radius: inherit;
+}
+
+.card:first-of-type::before {
+  inset: -3px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    #00eaff 25%,
+    transparent 50%,
+    #006eff 75%,
+    transparent 100%
+  );
+  background-size: 300% 100%;
+  animation: electricFlash 2.5s linear infinite;
+  filter: blur(3px);
+  opacity: 0.9;
+}
+
+.card:first-of-type::after {
+  inset: 2px;
+  background: rgba(0, 8, 25, 0.92);
+}
+
+@keyframes electricFlash {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  100% {
+    background-position: 300% 50%;
+  }
+}
+
+/* تقليل الحركة إذا كان الجهاز يفضل ذلك */
+@media (prefers-reduced-motion: reduce) {
+  .card:first-of-type,
+  .card:first-of-type::before {
+    animation: none;
   }
 }
 </style>
