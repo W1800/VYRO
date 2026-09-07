@@ -11,8 +11,27 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+.background-video {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -1;
+  opacity: 0.45;
+  pointer-events: none;
 }
 
+body {
+  position: relative;
+  overflow-x: hidden;
+}
+
+.container {
+  position: relative;
+  z-index: 1;
+}
 body {
   font-family: Arial, sans-serif;
   background: #020408;
@@ -271,6 +290,10 @@ footer {
 </head>
 
 <body>
+
+<video class="background-video" autoplay muted loop playsinline>
+  <source src="lv_0_٢٠٢٦٠٩٠٧١٧٠٤٤٢~3.mp4" type="video/mp4">
+</video>
 
 <div class="container">
 
