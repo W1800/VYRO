@@ -194,20 +194,37 @@ button:active {
 .message.show {
   display: block;
 }
-
 .features {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 14px;
-  margin-top: 25px;
+  gap: 16px;
+  align-items: stretch;
 }
 
 .feature {
-  background: #07101e;
-  border: 1px solid #142b45;
-  border-radius: 16px;
-  padding: 20px 12px;
+  min-height: 170px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   text-align: center;
+  padding: 24px 16px;
+  border-radius: 18px;
+  box-sizing: border-box;
+}
+
+/* ترتيب البطاقات في الجوال */
+@media (max-width: 600px) {
+  .features {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .feature {
+    min-height: 150px;
+    width: 100%;
+  }
+
 }
 
 .feature-icon {
@@ -224,12 +241,6 @@ button:active {
   color: #8495ad;
   font-size: 12px;
   line-height: 1.7;
-}
-
-.links {
-  display: grid;
-  gap: 12px;
-  margin-top: 20px;
 }
 
 .link {
