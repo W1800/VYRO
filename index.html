@@ -301,24 +301,30 @@ footer {
   letter-spacing: 6px;
 }
 
-/* وميض الشعار */
 .logo {
-  animation: logoGlow 2s ease-in-out infinite;
+  color: #ffffff;
+  text-shadow:
+    0 0 5px #00aaff,
+    0 0 10px #00aaff,
+    0 0 20px #0088ff,
+    0 0 40px #0066ff;
+  animation: logoGlow 1.2s ease-in-out infinite alternate;
 }
 
 @keyframes logoGlow {
-  0%, 100% {
+  from {
     text-shadow:
       0 0 5px #00aaff,
-      0 0 15px #0088ff,
-      0 0 30px #0066ff;
+      0 0 10px #00aaff,
+      0 0 20px #0088ff;
   }
 
-  50% {
+  to {
     text-shadow:
       0 0 10px #00ccff,
       0 0 25px #00aaff,
-      0 0 45px #0088ff;
+      0 0 45px #0077ff,
+      0 0 70px #0055ff;
   }
 }
  /* وميض كهربائي حول إطار التحميل */
