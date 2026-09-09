@@ -327,7 +327,14 @@ footer {
 </video>
 <audio id="siteSound" src="(2) تنزيل.mp3"></audio>
 <div class="container">
+<script>
+  const siteSound = document.getElementById("siteSound");
 
+  document.addEventListener("click", () => {
+    siteSound.volume = 0.2;
+    siteSound.play();
+  }, { once: true });
+</script>
   <header>
     <div class="logo">⚡VYRO⚡</div>
     <div class="tagline">VIDEO WITHOUT THE CLUTTER</div>
