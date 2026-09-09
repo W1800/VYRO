@@ -325,16 +325,18 @@ footer {
 <video class="background-video" autoplay muted loop playsinline>
   <source src="lv_0_٢٠٢٦٠٩٠٧١٧٠٤٤٢~3.mp4" type="video/mp4">
 </video>
-<audio id="siteSound" src="(2) تنزيل.mp3"></audio>
-<div class="container">
+<audio id="siteSound" src="./(2) تنزيل.mp3" preload="auto"></audio>
+
 <script>
   const siteSound = document.getElementById("siteSound");
 
-  document.addEventListener("click", () => {
+  document.addEventListener("click", function () {
     siteSound.volume = 0.2;
     siteSound.play();
   }, { once: true });
 </script>
+
+<div class="container">
   <header>
     <div class="logo">⚡VYRO⚡</div>
     <div class="tagline">VIDEO WITHOUT THE CLUTTER</div>
