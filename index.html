@@ -395,13 +395,19 @@ async function checkVideo() {
   const url = input.value.trim();
 
   if (!url) {
-    message.textContent = "الصق رابط الفيديو أولاً.";
+    message.textContent = "ألصق رابط الفيديو أولاً.";
     message.classList.add("show");
     return;
   }
 
-  if (!url.includes("tiktok.com")) {
-    message.textContent = "هذا ليس رابط TikTok صحيحاً.";
+  let apiUrl = "";
+
+  if (url.includes("tiktok.com")) {
+    apiUrl = "https://vyro-backend.onrender.com/api/download";
+  } else if (url.includes("instagram.com")) {
+    apiUrl = "https://vyro-backend.onrender.com/api/instagram-download";
+  } else {
+    message.textContent = "ضع رابط TikTok أو Instagram صحيح.";
     message.classList.add("show");
     return;
   }
@@ -410,16 +416,13 @@ async function checkVideo() {
   message.classList.add("show");
 
   try {
-    const response = await fetch(
-      "https://vyro-backend.onrender.com/api/download",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ url })
-      }
-    );
+    const response = await fetch(apiUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ url })
+    });
 
     const data = await response.json();
 
@@ -427,11 +430,20 @@ async function checkVideo() {
       throw new Error(data.error || "تعذر الحصول على الفيديو");
     }
 
-    message.innerHTML = `
-  <a href="https://vyro-backend.onrender.com/api/download-file?url=${encodeURIComponent(url)}">
-  تحميل الفيديو
-</a>
-`;
+    if (url.includes("tiktok.com")) {
+      message.innerHTML = `
+        <a href="https://vyro-backend.onrender.com/api/download-file?url=${encodeURIComponent(url)}">
+          تحميل الفيديو
+        </a>
+      `;
+    } else {
+      message.innerHTML = `
+        <a href="${data.video}" target="_blank" rel="noopener">
+          تحميل فيديو Instagram
+        </a>
+      `;
+    }
+
   } catch (error) {
     message.textContent = "حدث خطأ أثناء جلب الفيديو.";
     console.error(error);
