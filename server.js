@@ -82,7 +82,7 @@ app.get("/api/download-file", async (req, res) => {
       return res.status(500).send("تعذر تحميل الفيديو");
     }
 
-    res.setHeader("Content-Type", "video/mp4");
+    res.setHeader("Content-Type", "application/octet-stream");
     res.setHeader(
       "Content-Disposition",
       'attachment; filename="VYRO-video.mp4"'
