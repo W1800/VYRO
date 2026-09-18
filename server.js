@@ -105,7 +105,55 @@ app.get("/api/download-file", async (req, res) => {
   }
 });
 
+// Instagram Downloader
+app.post("/api/instagram-download", async (req, res) => {
+  try {
+    const { url } = req.body;
 
+    if (!url || !url.includes("instagram.com")) {
+      return res.status(400).json({
+        error: "ضع رابط Instagram صحيح"
+      });
+    }
+
+    const response = await fetch(
+      "https://api.easydown.org/api/v1/platforms/instagram/parse",
+      {
+        method: "POST",
+        headers: {
+          "Authorization": `Bearer ${process.env.EASYDOWN_API_KEY}`,
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ url })
+      }
+    );
+
+    const data = await response.json();
+
+    if (
+      !data.data ||
+      !data.data.media ||
+      !data.data.media.videos ||
+      !data.data.media.videos[0]
+    ) {
+      return res.status(400).json({
+        error: "تعذر الحصول على فيديو Instagram"
+      });
+    }
+
+    res.json({
+      success: true,
+      video: data.data.media.videos[0].url
+    });
+
+  } catch (error) {
+    console.error(error);
+
+    res.status(500).json({
+      error: "حدث خطأ أثناء معالجة Instagram"
+    });
+  }
+});
 app.listen(PORT, "0.0.0.0", () => {
   console.log(`Server running on port ${PORT}`);
 });
