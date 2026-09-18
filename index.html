@@ -428,9 +428,9 @@ async function checkVideo() {
     }
 
     message.innerHTML = `
-  <a href="${data.video}" download="VYRO-video.mp4">
-    تحميل الفيديو
-  </a>
+  <a href="https://vyro-backend.onrender.com/api/download-file?url=${encodeURIComponent(url)}">
+  تحميل الفيديو
+</a>
 `;
   } catch (error) {
     message.textContent = "حدث خطأ أثناء جلب الفيديو.";
