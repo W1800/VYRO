@@ -1,10 +1,12 @@
 const express = require("express");
+const cors = require("cors");
 
-const app = express();const cors = require("cors");
+const app = express();
+
 app.use(cors());
-const PORT = process.env.PORT || 10000;
-
 app.use(express.json());
+
+const PORT = process.env.PORT || 10000;
 
 app.get("/", (req, res) => {
   res.send("VYRO Backend is running!");
@@ -42,11 +44,61 @@ app.post("/api/download", async (req, res) => {
     });
 
   } catch (error) {
+    console.error(error);
+
     res.status(500).json({
       error: "حدث خطأ في الخادم"
     });
   }
 });
+
+
+// تحميل الفيديو عن طريق الباكند
+app.get("/api/download-file", async (req, res) => {
+  try {
+    const { url } = req.query;
+
+    if (!url || !url.includes("tiktok.com")) {
+      return res.status(400).send("رابط TikTok غير صحيح");
+    }
+
+    const response = await fetch("https://www.tikwm.com/api/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      body: new URLSearchParams({ url })
+    });
+
+    const data = await response.json();
+
+    if (!data.data || !data.data.play) {
+      return res.status(400).send("تعذر الحصول على الفيديو");
+    }
+
+    const videoResponse = await fetch(data.data.play);
+
+    if (!videoResponse.ok) {
+      return res.status(500).send("تعذر تحميل الفيديو");
+    }
+
+    res.setHeader("Content-Type", "video/mp4");
+    res.setHeader(
+      "Content-Disposition",
+      'attachment; filename="VYRO-video.mp4"'
+    );
+
+    const buffer = await videoResponse.arrayBuffer();
+
+    res.send(Buffer.from(buffer));
+
+  } catch (error) {
+    console.error(error);
+
+    res.status(500).send("حدث خطأ أثناء تحميل الفيديو");
+  }
+});
+
 
 app.listen(PORT, "0.0.0.0", () => {
   console.log(`Server running on port ${PORT}`);
