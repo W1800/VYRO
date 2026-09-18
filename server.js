@@ -1,11 +1,17 @@
 const express = require("express");
 const cors = require("cors");
-
+const rateLimit = require("express-rate-limit");
 const app = express();
 
 app.use(cors());
 app.use(express.json());
+const limiter = rateLimit({
+  windowMs: 60 * 1000,
+  max: 20,
+  message: "محاولات كثيرة، حاول بعد دقيقة."
+});
 
+app.use("/api/", limiter);
 const PORT = process.env.PORT || 10000;
 
 app.get("/", (req, res) => {
